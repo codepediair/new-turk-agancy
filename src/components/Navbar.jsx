@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 const Navbar = () => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [transparentNavBar, setTransparentNavBar] = useState(true);
 
   useEffect(() => {
     if (showMobileMenu) {
@@ -15,11 +16,21 @@ const Navbar = () => {
     }
   }, [showMobileMenu]);
 
+  const changeNavBarColor = () => {
+    if (window.scrollY >= 400) {
+      setTransparentNavBar(true);
+    } else {
+      setTransparentNavBar(false);
+    }
+  }
+
+  window.addEventListener('scroll', changeNavBarColor);
+
   return (
-    <div className="absolute top-0 left-0 w-full z-10 bg-transparent">
-      <div className="flex justify-between items-center p-5 md:px-20 md:py-5 bg-transparent ">
+    <div className={`fixed top-0 left-0 w-full z-10  ${transparentNavBar ? 'bg-gray-900/80' : 'bg-gray-900/15'} transition-all`}>
+      <div className="flex justify-between items-center p-5 md:px-20 md:py-5 bg-transparent">
         <img src={assets.logo} alt="" />
-        <ul className="hidden md:flex space-x-10 text-gray-200 font-semibold">
+        <ul className="hidden md:flex space-x-10 text-white font-semibold">
           <a href="#Header" className="cursor-pointer hover:text-gray-400">
             Home
           </a>
